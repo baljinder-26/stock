@@ -2,4 +2,4 @@ pandas
 streamlit
 yfinance
 streamlit_option_menu 
-matplotlib.pyplot
+ matplotlib.pyplot
