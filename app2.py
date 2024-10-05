@@ -3,7 +3,7 @@ import pandas as pd
 import yfinance as yf
 import datetime
 from streamlit_option_menu import option_menu
-import plotly.graph_objects as go
+# import plotly.graph_objects as go
 import matplotlib.pyplot as plt
 # pio.templates.default = "plotly_white"
 
