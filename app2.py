@@ -96,7 +96,7 @@ df_new= pd.concat((df,df1),axis=1)
 
 st.write(df_new)
 # fig=px.line(df_new,y='Open')
-st.subheader(f"Comparison of {a} and {b}")
+st.subheader(f"Comparison Analysis of {a} and {b}")
 fig=px.line(df_new,y=['High','High1'])
 st.plotly_chart(fig,use_container_width=True)
 
