@@ -3,6 +3,9 @@ import pandas as pd
 import yfinance as yf
 import datetime
 from streamlit_option_menu import option_menu
+import plotly_express as px
+import plotly.graph_objects as go
+
 # import plotly.graph_objects as go
 # import matplotlib.pyplot as plt
 # pio.templates.default = "plotly_white"
@@ -53,53 +56,64 @@ st.header("Compare two different Company Stocks")
 a=st.selectbox("Select Company-1",options=['Apple','Google','Adobe','Tesla','Microsoft'])
 b=st.selectbox("Select Company-2",options=['Apple','Google','Adobe','Tesla','Microsoft'])
 if a=='Apple':
-    ticker='AAPL'
+    ticker1='AAPL'
 elif a=='Google':
-    ticker='GOOG'
+    ticker1='GOOG'
 elif a=='Adobe':
-    ticker='ADBE'
+    ticker1='ADBE'
 elif a=='Tesla':
-    ticker='TSLA'
+    ticker1='TSLA'
 elif a=='Microsoft':
-    ticker='MSFT'
+    ticker1='MSFT'
 
 if b=='Apple':
-    ticker='AAPL'
+    ticker2='AAPL'
 elif b=='Google':
-    ticker='GOOG'
+    ticker2='GOOG'
 elif b=='Adobe':
-    ticker='ADBE'
+    ticker2='ADBE'
 elif b=='Tesla':
-    ticker='TSLA'
+    ticker2='TSLA'
 elif b=='Microsoft':
-    ticker='MSFT'
-list1=yf.download(ticker,start="2024-08-01",end=today)
+    ticker2='MSFT'
+# list1=yf.download(ticker,start="2024-08-01",end=today)
+# data1={'Date':list1.Date,'Open':list1.Open,'High':list1.High,
+#         'Low':list1.Low,'Close':list1.Close,'Adj Close':list1['Adj Close']
+#         ,'Volume':list1.Volume}
+# df=pd.DataFrame(data1)
+list1=yf.download(ticker1,start="2024-08-01",end=today)
+df=pd.DataFrame(list1)
+st.write(df)
+
 list2=yf.download(ticker,start="2024-08-01",end=today)
+df1=pd.DataFrame(list2)
 
-list1['High'] = list1['Close'].pct_change()
-list2['High'] = list2['Close'].pct_change()
+df1.rename(columns={'Open':'Open1',"High":"High1","Close":'Close1','Adj Close':"tclose",'Volume':'Vol','Low':'lo'},inplace=True)
 
-# # Create a figure to visualize the daily returns
-# fig = go.Figure()
-# fig=plt.figure(figsize=(10,10))
+# df1.drop(columns=["Date"],axis=1,inplace=True)
+# st.write(df1)
+df_new= pd.concat((df,df1),axis=1)
 
-# fig.add_trace(go.Scatter(x=list1.index, y=list1['High'],
-#                          mode='lines', name=f'{list1}', line=dict(color='blue')))
-# fig.add_trace(go.Scatter(x=list2.index, y=list2['High'],
-#                         mode='lines', name=f'{list2}', line=dict(color='green')))
+st.write(df_new)
+# fig=px.line(df_new,y='Open')
+st.subheader(f"Comparison of {a} and {b}")
+fig=px.line(df_new,y=['High','High1'])
+st.plotly_chart(fig,use_container_width=True)
 
-# fig.update_layout(title=f'Stock Analysis for {list1} and {list2}',
-#                   xaxis_title='Date', yaxis_title='High',
-#                   legend=dict(x=0.02, y=0.95))
+# df_new= 
+st.line_chart(df_new, y=['Open',"Open1"])
+# 
+# 
+# 
+# # 
+# fig=px.line(list2,y="Hdf1
 
-# fig.show()
-# fig,ax=plt.subplots(figsize=(10,6))
-# ax.plot(a,a['Close'])
-# ax.plot(b,b['Close'])
-# ax.set_title("Share Stock Price")
-# ax.xlabel("Date")
-# ax.ylabel("Stock Price")
-# ax.grid(True)
-# ax.legend()
 
+# fig.add_scatter(y=df1["Close"])
+# st.plotly_chart(fig,use_container_width=True)
 # st.pyplot(fig)
+
+
+# st.line_chart(data=[])
+
+
