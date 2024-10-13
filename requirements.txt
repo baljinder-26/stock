@@ -2,4 +2,5 @@ pandas
 streamlit
 yfinance
 streamlit_option_menu 
- 
+ plotly_express
+ plotly.graph_objects
